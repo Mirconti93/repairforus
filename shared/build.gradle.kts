@@ -1,10 +1,14 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    kotlin("multiplatform")
+    id("com.android.library")
+    id("org.jetbrains.compose")
+
 }
 
+
+
 kotlin {
-    androidTarget {
+    android {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
@@ -25,7 +29,11 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.components.resources)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
